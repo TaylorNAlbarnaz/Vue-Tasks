@@ -1,6 +1,6 @@
 <template>
      <Header version="1.0"></Header>
-     <Tasks :tasks="tasks"/>
+     <Tasks @toggle-reminder="toggleReminder" @delete-task="deleteTask" :tasks="tasks"/>
 </template>
 
 <script>
@@ -13,6 +13,17 @@
           data() {
                return {
                     tasks: []
+               }
+          },
+          methods: {
+               deleteTask(taskId) {
+                    this.tasks = this.tasks.filter(t => t.id !== taskId)
+               },
+               toggleReminder(taskId) {
+                    this.tasks.forEach(t => {
+                         if (t.id === taskId)
+                              t.reminder = !t.reminder;
+                    });
                }
           },
           created() {
